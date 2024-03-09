@@ -13,14 +13,8 @@ test.describe("Contact", () => {
     const phone = "7878787878";
     const msg = "hello there messages";
 
-    //input data on contact form
-    await contactPage.fName.fill(name);
-    await contactPage.emailAdd.fill(email);
-    await contactPage.phoneNumber.fill(phone);
-    await contactPage.msg.fill(msg);
-
-    //click on submit button
-    await contactPage.clickSubmitBtn();
+    //input data on contact form and submit
+    await contactPage.submitForm(name,email,phone,msg)
 
     const submitMsg = await contactPage.submitMsg;
 

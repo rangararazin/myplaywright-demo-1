@@ -15,7 +15,7 @@ test.describe("Blog Page", () => {
     for (const elem of await blogPage.recentPostsList.elementHandles()) {
       //console.log((await elem.textContent())?.trim().length);
 
-      expect((await elem.textContent())?.trim().length).toBeGreaterThan(10);
+      expect((await elem.textContent())!.trim().length).toBeGreaterThan(10);
     }
 
     //verify total length =5

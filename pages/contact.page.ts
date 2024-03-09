@@ -5,7 +5,7 @@ class ContactPage {
   fName: Locator;
   emailAdd: Locator;
   phoneNumber: Locator;
-  msg: Locator;
+  msgArea: Locator;
   submitBtn: Locator;
   submitMsg: Locator;
 
@@ -16,7 +16,7 @@ class ContactPage {
     this.phoneNumber = page.locator(
       "//input[@id='evf-277-field_66FR384cge-3']"
     );
-    this.msg = page.locator("//textarea[@id='evf-277-field_yhGx3FOwr2-4']");
+    this.msgArea = page.locator("//textarea[@id='evf-277-field_yhGx3FOwr2-4']");
     this.submitBtn = page.locator("//button[@id='evf-submit-277']");
     this.submitMsg = page.locator(
       'text="Thanks for contacting us! We will be in touch with you shortly"'
@@ -27,9 +27,16 @@ class ContactPage {
     await this.page.goto("https://practice.sdetunicorns.com/contact/");
   }
 
-  clickSubmitBtn() {
-    return this.submitBtn.click();
+  async submitForm(name: string,email: string,phone: string,msg: string){
+    await this.fName.fill(name);
+    await this.emailAdd.fill(email);
+    await this.phoneNumber.fill(phone);
+    await this.msgArea.fill(msg);
+
+    await this.submitBtn.click();
+
   }
+
 }
 
 export default ContactPage;
