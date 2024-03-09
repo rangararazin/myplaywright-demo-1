@@ -14,11 +14,13 @@ test.describe("Contact", () => {
     const msg = "hello there messages";
 
     //input data on contact form and submit
-    await contactPage.submitForm(name,email,phone,msg)
+    await contactPage.submitForm(name, email, phone, msg);
 
-    const submitMsg = await contactPage.submitMsg;
+    //const submitMsg = await contactPage.submitMsg;
 
     //Verify submit success message appear
-    await expect(submitMsg).toBeVisible();
+    await expect(contactPage.submitMsg).toHaveText(
+      "Thanks for contacting us! We will be in touch with you shortly"
+    );
   });
 });

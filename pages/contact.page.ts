@@ -27,16 +27,14 @@ class ContactPage {
     await this.page.goto("https://practice.sdetunicorns.com/contact/");
   }
 
-  async submitForm(name: string,email: string,phone: string,msg: string){
+  async submitForm(name: string, email: string, phone: string, msg: string) {
     await this.fName.fill(name);
     await this.emailAdd.fill(email);
     await this.phoneNumber.fill(phone);
     await this.msgArea.fill(msg);
 
     await this.submitBtn.click();
-
   }
-
 }
 
 export default ContactPage;
