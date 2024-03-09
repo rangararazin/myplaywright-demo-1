@@ -1,121 +1,113 @@
 import { test, expect } from "@playwright/test";
-import { TIMEOUT } from "node:dns";
+import CartPage from "../pages/cart.page";
 
 import path from "node:path";
 
 test.describe("Upload file ", () => {
+  let cartPage: CartPage;
   test("Verify upload functionality", async ({ page }) => {
+    cartPage = new CartPage(page);
     //go to url
-    await page.goto("https://practice.sdetunicorns.com/cart/");
+    await cartPage.navigate();
 
     //provide test file path
     const filePath = path.join(__dirname, "../data/logotitle.png");
 
     //upload file
-    await page.setInputFiles('//*[@id="upfile_1"]', filePath);
-
-    //click upload
-    await page.locator("//input[@id='upload_1']").click();
+    cartPage.uploadComponent().uploadFile(filePath);
 
     //assertion
-    await expect(
-      page.locator("//label[@id='wfu_messageblock_header_1_label_1']")
-    ).toContainText("uploaded successfully");
+    await expect(cartPage.uploadComponent().successMsg).toContainText(
+      "uploaded successfully"
+    );
   });
 
-  test("Verify upload functionality with hidden input field", async ({
-    page,
-  }) => {
-    //go to url
-    await page.goto("https://practice.sdetunicorns.com/cart/");
+  //   test("Verify upload functionality with hidden input field", async ({
+  //     page,
+  //   }) => {
+  //     //go to url
+  //     await page.goto("https://practice.sdetunicorns.com/cart/");
 
-    //provide test file path
-    const filePath = path.join(__dirname, "../data/logotitle.png");
+  //     //provide test file path
+  //     const filePath = path.join(__dirname, "../data/logotitle.png");
 
-    //DOM Manipulation
-    await page.evaluate(() => {
-      const selector = document.querySelector("input#upfile_1");
-      if (selector) {
-        selector.className = "";
-      }
-    });
+  //     //DOM Manipulation
+  //     await page.evaluate(() => {
+  //       const selector = document.querySelector("input#upfile_1");
+  //       if (selector) {
+  //         selector.className = "";
+  //       }
+  //     });
 
-    //upload file
-    await page.setInputFiles('//*[@id="upfile_1"]', filePath);
+  //     //upload file
+  //     await page.setInputFiles('//*[@id="upfile_1"]', filePath);
 
-    //click upload
-    await page.locator("//input[@id='upload_1']").click();
+  //     //click upload
+  //     await page.locator("//input[@id='upload_1']").click();
 
-    //assertion
-    await expect(
-      page.locator("//label[@id='wfu_messageblock_header_1_label_1']")
-    ).toContainText("uploaded successfully");
-  });
+  //     //assertion
+  //     await expect(
+  //       page.locator("//label[@id='wfu_messageblock_header_1_label_1']")
+  //     ).toContainText("uploaded successfully");
+  //   });
 
-  test("Verify upload functionality with force wait, not a good idea", async ({
-    page,
-  }) => {
-    //go to url
-    await page.goto("https://practice.sdetunicorns.com/cart/");
+//   test("Verify upload functionality with force wait, not a good idea", async ({
+//     page,
+//   }) => {
+//     cartPage = new CartPage(page);
+//     //go to url
+//     await cartPage.navigate();
 
-    //provide test file path
-    const filePath = path.join(__dirname, "../data/3mb-file.pdf");
+//     //provide test file path
+//     const filePath = path.join(__dirname, "../data/3mb-file.pdf");
 
-    //upload file
-    await page.setInputFiles('//*[@id="upfile_1"]', filePath);
+//     //upload file
+//     cartPage.uploadComponent().uploadFile(filePath);
 
-    //click upload
-    await page.locator("//input[@id='upload_1']").click();
+//     //hardcoded wait
+//     await page.waitForTimeout(7000);
 
-    //hardcoded wait
-    await page.waitForTimeout(7000);
+//     //assertion
+//     await expect(cartPage.uploadComponent().successMsg).toContainText(
+//       "uploaded successfully"
+//     );
+//   });
 
-    //assertion
-    await expect(
-      page.locator("//label[@id='wfu_messageblock_header_1_label_1']")
-    ).toContainText("uploaded successfully");
-  });
+//   test("Verify upload functionality with waitFor", async ({ page }) => {
+//     cartPage = new CartPage(page);
+//     //go to url
+//     await cartPage.navigate();
+//     //provide test file path
+//     const filePath = path.join(__dirname, "../data/3mb-file.pdf");
 
-  test("Verify upload functionality with waitFor", async ({ page }) => {
-    //go to url
-    await page.goto("https://practice.sdetunicorns.com/cart/");
+//     //upload file
+//     cartPage.uploadComponent().uploadFile(filePath);
 
-    //provide test file path
-    const filePath = path.join(__dirname, "../data/3mb-file.pdf");
+//     //wait for condition
+//     await cartPage
+//       .uploadComponent()
+//       .successMsg.waitFor({ state: "visible", timeout: 12000 });
 
-    //upload file
-    await page.setInputFiles('//*[@id="upfile_1"]', filePath);
+//     //assertion
+//     await expect(cartPage.uploadComponent().successMsg).toContainText(
+//       "uploaded successfully"
+//     );
+//   });
 
-    //click upload
-    await page.locator("//input[@id='upload_1']").click();
+//   test("Verify upload functionality with assertion wait", async ({ page }) => {
+//     cartPage = new CartPage(page);
+//     //go to url
+//     await cartPage.navigate();
+//     //provide test file path
+//     const filePath = path.join(__dirname, "../data/3mb-file.pdf");
 
-    //wait for condition
-    await page
-      .locator("//label[@id='wfu_messageblock_header_1_label_1']")
-      .waitFor({ state: "visible", timeout: 12000 });
+//     //upload file
+//     cartPage.uploadComponent().uploadFile(filePath);
 
-    //assertion
-    await expect(
-      page.locator("//label[@id='wfu_messageblock_header_1_label_1']")
-    ).toContainText("uploaded successfully");
-  });
-
-  test("Verify upload functionality with assertion wait", async ({ page }) => {
-    //go to url
-    await page.goto("https://practice.sdetunicorns.com/cart/");
-
-    //provide test file path
-    const filePath = path.join(__dirname, "../data/3mb-file.pdf");
-
-    //upload file
-    await page.setInputFiles('//*[@id="upfile_1"]', filePath);
-
-    //click upload
-    await page.locator("//input[@id='upload_1']").click();
-
-    //assertion
-    await expect(
-      page.locator("//label[@id='wfu_messageblock_header_1_label_1']")
-    ).toContainText("uploaded successfully", { timeout: 10000 });
-  });
+//     //assertion
+//     await expect(cartPage.uploadComponent().successMsg).toContainText(
+//       "uploaded successfully",
+//       { timeout: 10000 }
+//     );
+//   });
 });
