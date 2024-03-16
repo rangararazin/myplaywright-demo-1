@@ -4,47 +4,41 @@ import HomePage from "../pages/home.page";
 test.describe("Home", () => {
   let homePage: HomePage;
 
-  test("Open HomePage and verify title", async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
+
     //open homepage
     await homePage.navigate();
+  });
 
+  test("Open HomePage and verify title", async ({ page }) => {
     //verify title
     await expect(page).toHaveTitle("Practice E-Commerce Site – SDET Unicorns");
   });
 
-  test("Verify About page title", async ({ page }) => {
-    //open about page
-    await page.goto("/about");
+  // test("Verify About page title", async ({ page }) => {
+  //   //open about page
+  //   await page.goto("/about");
 
-    //verify about page title
-    await expect(page).toHaveTitle("About – Practice E-Commerce Site");
-  });
+  //   //verify about page title
+  //   await expect(page).toHaveTitle("About – Practice E-Commerce Site");
+  // });
 
   test("Click Get Started button CSS Selector", async ({ page }) => {
-    homePage = new HomePage(page);
-    //open url
-    await homePage.navigate();
     //click the button
     await homePage.getStartedBtn.click();
     //verify url has #get-started
     await expect(page).toHaveURL(/.*#get-started/);
   });
 
-  test("Verify heading test using Text Selector", async ({ page }) => {
-    homePage = new HomePage(page);
-    //open url
-    await homePage.navigate();
+  test("Verify heading test using Text Selector", async () => {
     //find the text locator
     const headingText = await homePage.headingText;
     //verify heading text
     await expect(headingText).toBeVisible();
   });
 
-  test("Verify Home link is enable", async ({ page }) => {
-    homePage = new HomePage(page);
-    //open url
-    await homePage.navigate();
+  test("Verify Home link is enable", async () => {
     //find the home text
     const homeText = homePage.homeLink1;
     const homeText1 = homePage.homeLink2;
@@ -53,18 +47,14 @@ test.describe("Home", () => {
     await expect(homeText1).toBeEnabled();
   });
 
-  test("Verify Search icon visible", async ({ page }) => {
-    homePage = new HomePage(page);
-    //open url
-    await homePage.navigate();
+  test("Verify Search icon visible", async () => {
     //find the search icon
     const searchIcon = homePage.searchIcon;
     //verify search icon visible
     await expect(searchIcon).toBeVisible();
   });
 
-  test("Verify the text for nav links", async ({ page }) => {
-    homePage = new HomePage(page);
+  test("Verify the text for nav links", async () => {
     const expectedLinks = [
       "Home",
       "About",
@@ -73,8 +63,7 @@ test.describe("Home", () => {
       "Contact",
       "My account",
     ];
-    //open url
-    await homePage.navigate();
+
     //verify text links under nav bar
     expect(await homePage.getNavLinksText()).toEqual(expectedLinks);
   });

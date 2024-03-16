@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import ContactPage from "../pages/contact.page";
+import { faker } from '@faker-js/faker';
 
 test.describe("Contact", () => {
   let contactPage: ContactPage;
@@ -10,10 +11,10 @@ test.describe("Contact", () => {
     await contactPage.navigate();
    
 
-    const name = "Testname";
-    const email = "testetf1212ysnrug@yopmail.com";
-    const phone = "7878787878";
-    const msg = "hello there messages";
+    const name = faker.person.firstName();
+    const email = faker.internet.email();
+    const phone = faker.phone.number();
+    const msg = faker.lorem.paragraph(2);
 
     //input data on contact form and submit
     await contactPage.submitForm(name, email, phone, msg);

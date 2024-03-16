@@ -17,6 +17,7 @@ class ContactPage {
       "//input[@id='evf-277-field_66FR384cge-3']"
     );
     this.msgArea = page.locator("//textarea[@id='evf-277-field_yhGx3FOwr2-4']");
+
     this.submitBtn = page.locator("//button[@id='evf-submit-277']");
     this.submitMsg = page.locator(
       'text="Thanks for contacting us! We will be in touch with you shortly"'
