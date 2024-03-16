@@ -3,7 +3,7 @@ import CartPage from "../pages/cart.page";
 
 import path from "node:path";
 
-test.describe("Upload file ", () => {
+test.describe("Upload file", () => {
   let cartPage: CartPage;
   test("Verify upload functionality", async ({ page }) => {
     cartPage = new CartPage(page);

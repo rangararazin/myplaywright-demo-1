@@ -5,8 +5,10 @@ test.describe("Contact", () => {
   let contactPage: ContactPage;
   test("Fill and verify contact form submission", async ({ page }) => {
     contactPage = new ContactPage(page);
+    
     //open homepage
     await contactPage.navigate();
+   
 
     const name = "Testname";
     const email = "testetf1212ysnrug@yopmail.com";
